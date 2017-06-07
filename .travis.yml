@@ -1,0 +1,11 @@
+install:
+  - "npm install"
+  - "npm i serve_me -g"
+  - "export TRAVIS=1"
+before_script:
+    - serve_me test/locales 8081
+language: node_js
+node_js:
+  - "6.11.0"
+  - "7.0.0"
+  - "8.0.0"
