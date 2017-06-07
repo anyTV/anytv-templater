@@ -84,6 +84,16 @@ To compile the ES6 source code to ES5:
 npm start
 ```
 
+
+# Running test
+
+```sh
+sudo npm i serve_me -g
+serve_me test/locales 8081
+npm test
+```
+
+
 # License
 
 MIT
