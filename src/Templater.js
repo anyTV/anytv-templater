@@ -1,7 +1,9 @@
 'use strict';
 
 import { EmailTemplate as Template } from 'email-templates';
-import country_language_map from './country_language_map';
+import { Language } from './Language.js';
+import country_language_map from './config/country_language_map.js';
+import winston from 'winston';
 import i18n from 'anytv-i18n';
 import _ from 'lodash';
 
@@ -82,22 +84,9 @@ export default class Templater {
         return this;
     }
 
+    _render (next) {
 
-    build (next) {
-
-        if (!this._template) {
-            return next('Template is missing. Call .template() function');
-        }
-
-        if (this._built) {
-            return next(null, this._html);
-        }
-
-        // process content
-        if (this._content) {
-            this._content = _.mapValues(this._content, this._trans);
-        }
-
+        this._translate_content();
 
         // create Template object
         const template = new Template(this.config.templates_dir + this._template);
@@ -112,7 +101,77 @@ export default class Templater {
 
             this._built = true;
 
-            next(null, this._html);
+            next();
         });
+
+        return this;
+    }
+
+
+    _translate_content () {
+
+        // process content
+        if (this._content) {
+            this._content = _.mapValues(this._content, this._trans);
+        }
+
+        return this;
+    }
+
+
+    build (next) {
+
+        if (!this._template) {
+            return next('Email does not have a template. Call .template() function');
+        }
+
+        if (this._built) {
+            return next();
+        }
+
+
+        if (this._need_recommendation) {
+            (new Language(this.config.database))
+                .recommend_language(this._recommend_for)
+                .then(this.language)
+                .catch(() => {
+                    winston.warn(
+                        'Cannot find language to recommend.',
+                        'Using: ', this._language
+                    );
+                })
+                .then(this._render.bind(this, next));
+        }
+        else {
+            this._render(next);
+        }
+    }
+
+    recommend_language (identifier) {
+
+        if (!_.has(this.config, 'database.ytfreedom')) {
+            throw new Error('Missing ytfreedom database configuration');
+        }
+
+        if (!_.has(this.config, 'database.master')) {
+            throw new Error('Missing master database configuration');
+        }
+
+        if (this._built) {
+            throw new Error('Mail was already built. Doing nothing');
+        }
+
+        if (!this._to) {
+            throw new Error('Recipients has not been set');
+        }
+
+        if (_.isArray(this._to) && this._to.length > 1) {
+            return this.language(this.config.i18n.default);
+        }
+
+        this._need_recommendation = true;
+        this._recommend_for = identifier || this._to;
+
+        return this;
     }
 }

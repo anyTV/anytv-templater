@@ -16,6 +16,10 @@ export default class {
      */
     static configure (config) {
 
+        if (!config) {
+            throw new Error('configuration is missing');
+        }
+
         if (!config.templates_dir) {
             throw new Error('templates directory is missing');
         }
@@ -48,7 +52,8 @@ export default class {
         return new Templater(CONFIG);
     }
 
-    static Templater () {
+
+    static get Templater () {
         return Templater;
     }
 }

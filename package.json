@@ -1,14 +1,16 @@
 {
-  "name": "anytv-mailer",
+  "name": "anytv-templater",
   "version": "0.0.0",
-  "description": "A module for mailing",
+  "description": "A module for building template strings",
   "main": "index.js",
   "dependencies": {
     "anytv-i18n": "^1.0.1",
+    "anytv-node-mysql": "0.0.54",
     "ejs": "^2.5.6",
     "email-templates": "^2.5.4",
     "lodash": "^4.17.4",
-    "nodemailer": "^3.1.8"
+    "squel": "^5.10.0",
+    "winston": "^2.3.1"
   },
   "devDependencies": {
     "esdoc": "^0.5.2",
@@ -18,7 +20,6 @@
     "grunt-rollup": "^1.0.1",
     "mocha": "^3.2.0",
     "mocha-lcov-reporter": "^1.3.0",
-    "nodemailer-mock": "^1.2.1",
     "rollup": "^0.41.6",
     "should": "^11.2.1"
   },
@@ -35,7 +36,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/anyTV/anytv-mailer.git"
+    "url": "https://github.com/anyTV/anytv-templater.git"
   },
   "keywords": [
     "channel",
@@ -44,7 +45,7 @@
   "author": "anyTV",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/anyTV/anytv-mailer/issues"
+    "url": "https://github.com/anyTV/anytv-templater/issues"
   },
-  "homepage": "https://github.com/anyTV/anytv-mailer"
+  "homepage": "https://github.com/anyTV/anytv-templater"
 }
