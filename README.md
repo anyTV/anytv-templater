@@ -1,4 +1,5 @@
 # anytv-templater
+[![Build Status](https://travis-ci.org/anyTV/anytv-templater.svg?branch=master)](https://travis-ci.org/anyTV/anytv-templater)
 
 A module for building content string from templates
 
