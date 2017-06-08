@@ -1,6 +1,6 @@
 {
   "name": "anytv-templater",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A module for building template strings",
   "main": "index.js",
   "dependencies": {
