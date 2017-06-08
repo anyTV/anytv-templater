@@ -145,6 +145,8 @@ export default class Templater {
         else {
             this._render(next);
         }
+
+        return this;
     }
 
     recommend_language (identifier) {
