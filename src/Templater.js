@@ -127,7 +127,7 @@ export default class Templater {
         }
 
         if (this._built) {
-            next();
+            next(null, this._html);
             return this;
         }
 
