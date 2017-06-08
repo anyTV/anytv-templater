@@ -122,11 +122,13 @@ export default class Templater {
     build (next) {
 
         if (!this._template) {
-            return next('Email does not have a template. Call .template() function');
+            next('Email does not have a template. Call .template() function');
+            return this;
         }
 
         if (this._built) {
-            return next();
+            next();
+            return this;
         }
 
 
