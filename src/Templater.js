@@ -4,7 +4,6 @@ import { EmailTemplate as Template } from 'email-templates';
 import { Language } from './Language.js';
 import country_language_map from './config/country_language_map.js';
 import winston from 'winston';
-import i18n from 'anytv-i18n';
 import _ from 'lodash';
 
 
@@ -21,7 +20,7 @@ export default class Templater {
 
         this._built = false;
 
-        this._language = config.i18n.default;
+        this._i18n = config.i18n;
 
         this._trans = this._trans.bind(this);
     }
@@ -30,7 +29,7 @@ export default class Templater {
     _trans (param) {
 
         return typeof param === 'object'
-            ? i18n.trans(this._language, param.trans, param.data)
+            ? this._i18n.trans(this._language, param.trans, param.data)
             : param;
     }
 
@@ -170,7 +169,7 @@ export default class Templater {
         }
 
         if (_.isArray(this._to) && this._to.length > 1) {
-            return this.language(this.config.i18n.default);
+            return this.language(this.config.i18n.config.get('default'));
         }
 
         this._need_recommendation = true;

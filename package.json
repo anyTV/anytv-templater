@@ -1,10 +1,9 @@
 {
   "name": "anytv-templater",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A module for building template strings",
   "main": "index.js",
   "dependencies": {
-    "anytv-i18n": "^1.0.1",
     "anytv-node-mysql": "0.0.54",
     "ejs": "^2.5.6",
     "email-templates": "^2.5.4",
@@ -13,6 +12,7 @@
     "winston": "^2.3.1"
   },
   "devDependencies": {
+    "anytv-i18n": "^1.0.1",
     "chai": "^4.0.2",
     "esdoc": "^0.5.2",
     "express": "^4.15.3",

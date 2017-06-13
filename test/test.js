@@ -2,21 +2,23 @@
 
 const templater = require('../index.js');
 const should = require('chai').should();
+const i18n = require('anytv-i18n');
 const path = require('path');
 
 
 describe('Overall test', () => {
 
-    templater.configure({
-
-        i18n: {
+    i18n.configure({
             languages_url: 'http://localhost:8081/:project/languages.json',
             translations_url: 'http://localhost:8081/:project/:lang.json',
-            project: 'test_project',
             default: 'en'
-        },
+        })
+        .use('test_project')
+        .load();
 
-        templates_dir: path.normalize(__dirname + '/templates/')
+    templater.configure({
+        templates_dir: path.normalize(__dirname + '/templates/'),
+        i18n
     });
 
 
