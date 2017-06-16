@@ -42,6 +42,26 @@ describe('Overall test', () => {
     });
 
 
+    it('should generate with a custom template', done => {
+
+        templater.make
+            .template(path.normalize(__dirname + '/custom_templates/custom'))
+            .content({
+                date: 'Feb 17',
+                hello: {
+                    trans: 'hello',
+                    data: {
+                        name: 'raven'
+                    }
+                }
+            })
+            .build(function (err, html) {
+                html.should.be.equal('Feb 17, This is a sample email. Hello raven');
+                done();
+            });
+    });
+
+
     it('should generate the right template with the right language', done => {
 
         templater.make
