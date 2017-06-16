@@ -87,8 +87,12 @@ export default class Templater {
 
         this._translate_content();
 
+        const template_path = this._template[0] !== '/'
+            ? this.config.templates_dir + this._template
+            : this._template;
+
         // create Template object
-        const template = new Template(this.config.templates_dir + this._template);
+        const template = new Template(template_path);
 
         template.render(this._content, (err, result) => {
 
