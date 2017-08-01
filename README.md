@@ -18,17 +18,14 @@ Simple example:
 
 
 const templater = require('anytv-templater');
+const i18n = require('anytv-i18n');
 
+// make sure i18n is loaded before passing it on templater
 
 // on server.js
 templater.configure({
-
-    i18n: {
-        languages_url: 'https://translation.server.com/:project/latest/languages.json',
-        translations_url: 'https://translation.server.com/:project/latest/:lang.json',
-        project: 'project_name',
-        default: 'en'
-    },
+    
+    i18n: i18n,
 
     templates_dir: 'directory/of/templates'
 });
