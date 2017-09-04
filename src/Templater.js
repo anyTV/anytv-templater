@@ -20,13 +20,13 @@ export default class Templater {
 
         this._built = false;
 
-        this._i18n = config.i18n || this._default_i18n();
+        this._i18n = config.i18n || this._mapper();
 
         this._trans = this._trans.bind(this);
     }
 
 
-    _default_i18n () {
+    _mapper () {
         return {
             trans (lang, key, variables) {
 
