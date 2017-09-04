@@ -58,7 +58,7 @@ export default class Templater {
                  * `:name aloha!` => `John aloha!`
                  */
                 _(variables).forOwn((value, _key) => {
-                    str = str.replace(new RegExp(`:${_key}`, 'g'), value);
+                    str = str.replace(new RegExp(`:${_key}\b`, 'g'), value);
                 });
 
                 return str;
