@@ -20,7 +20,7 @@ export default class Templater {
 
         this._built = false;
 
-        this._i18n = config.i18n || this._mapper();
+        this._mapper = config.mapper || config.i18n || this._mapper();
 
         this._trans = this._trans.bind(this);
     }
@@ -70,7 +70,7 @@ export default class Templater {
     _trans (param) {
 
         return typeof param === 'object'
-            ? this._i18n.trans(this._language, param.trans, param.data)
+            ? this._mapper.trans(this._language, param.trans, param.data)
             : param;
     }
 
