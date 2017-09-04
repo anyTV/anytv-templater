@@ -23,10 +23,6 @@ export default class {
             throw new Error('templates directory is missing');
         }
 
-        if (!config.i18n) {
-            throw new Error('i18n is missing');
-        }
-
         // make it end in trailing slash
         if (config.templates_dir.substr(-1) !== '/') {
             config.templates_dir += '/';
