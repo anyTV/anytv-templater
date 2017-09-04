@@ -20,9 +20,50 @@ export default class Templater {
 
         this._built = false;
 
-        this._i18n = config.i18n;
+        this._i18n = config.i18n || this._default_i18n();
 
         this._trans = this._trans.bind(this);
+    }
+
+
+    _default_i18n () {
+        return {
+            trans (lang, key, variables) {
+
+                if (typeof variables === 'undefined') {
+
+                    // support for trans(key, variable)
+                    if (typeof key === 'object') {
+                        variables = key;
+                        key = lang;
+                    }
+
+                    // support for trans(key)
+                    else if (typeof key === 'undefined') {
+                        key = lang;
+                    }
+
+                    // support for trans(lang, key)
+                    else {
+                        variables = {};
+                    }
+                }
+
+
+                let str = key;
+
+                /**
+                 * Replace variables in the string
+                 * `Hello :name!` => `Hello John!`
+                 * `:name aloha!` => `John aloha!`
+                 */
+                _(variables).forOwn((value, _key) => {
+                    str = str.replace(new RegExp(`:${_key}`, 'g'), value);
+                });
+
+                return str;
+            }
+        };
     }
 
 

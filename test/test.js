@@ -2,23 +2,13 @@
 
 const templater = require('../index.js');
 const should = require('chai').should();
-const i18n = require('anytv-i18n');
 const path = require('path');
 
 
 describe('Overall test', () => {
 
-    i18n.configure({
-            languages_url: 'http://localhost:8081/:project/languages.json',
-            translations_url: 'http://localhost:8081/:project/:lang.json',
-            default: 'en'
-        })
-        .use('test_project')
-        .load();
-
     templater.configure({
-        templates_dir: path.normalize(__dirname + '/templates/'),
-        i18n
+        templates_dir: path.normalize(__dirname + '/templates/')
     });
 
 
@@ -36,7 +26,7 @@ describe('Overall test', () => {
                 }
             })
             .build(function (err, html) {
-                html.should.be.equal('Feb 17, This is a sample email. Hello raven');
+                html.should.be.equal('Feb 17, This is a sample email. hello');
                 done();
             });
     });
@@ -56,13 +46,13 @@ describe('Overall test', () => {
                 }
             })
             .build(function (err, html) {
-                html.should.be.equal('Feb 17, This is a sample email. Hello raven');
+                html.should.be.equal('Feb 17, This is a custom sample email. hello');
                 done();
             });
     });
 
 
-    it('should generate the right template with the right language', done => {
+    it('should generate the right template even if language is not present', done => {
 
         templater.make
             .language('zh')
@@ -77,7 +67,7 @@ describe('Overall test', () => {
                 }
             })
             .build(function (err, html) {
-                html.should.be.equal('Feb 17, This is a sample email. 你好 raven');
+                html.should.be.equal('Feb 17, This is a sample email. hello');
                 done();
             });
     });

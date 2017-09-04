@@ -21,10 +21,11 @@ const templater = require('anytv-templater');
 const i18n = require('anytv-i18n');
 
 // make sure i18n is loaded before passing it on templater
+// it will use a default `trans` function if i18n is not passed
 
 // on server.js
 templater.configure({
-    
+
     i18n: i18n,
 
     templates_dir: 'directory/of/templates'
