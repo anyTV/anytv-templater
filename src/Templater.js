@@ -94,7 +94,7 @@ export default class Templater {
         const find = key =>
             language_group =>
                 _.includes(language_group.countries, key)
-                || language_group.countries[key];
+                || language_group.countries[_.toUpper(key)];
 
         // used a native for loop to make the loop end
         // as soon as a match is found
