@@ -9,7 +9,7 @@ const sinonChai = require('sinon-chai');
 const Templater = require('../index').Templater;
 
 
-chai.should();
+const should = chai.should();
 chai.use(sinonChai);
 
 
@@ -80,6 +80,51 @@ describe('#Templater', function () {
 
             done();
         });
+
+
+        it('should not derive any language if country code is not found', function (done) {
+
+            templater.derive_language('@@');
+
+            spy.should.have.been.calledWith('@@');
+            should.not.exist(spy.thisValues[0]._language);
+
+            done();
+        });
+
+
+        it('should not derive any language if country name is not found', function (done) {
+
+            templater.derive_language('NOTFOUND');
+
+            spy.should.have.been.calledWith('NOTFOUND');
+            should.not.exist(spy.thisValues[0]._language);
+
+            done();
+        });
+
+
+        it('should not derive any language if empty string is passed', function (done) {
+
+            templater.derive_language('');
+
+            spy.should.have.been.calledWith('');
+            should.not.exist(spy.thisValues[0]._language);
+
+            done();
+        });
+
+
+        it('should not derive any language if non-string is passed', function (done) {
+
+            templater.derive_language([]);
+
+            spy.should.have.been.calledWith([]);
+            should.not.exist(spy.thisValues[0]._language);
+
+            done();
+        });
+
 
         afterEach('tearDown', function () {
             templater.derive_language.restore();
