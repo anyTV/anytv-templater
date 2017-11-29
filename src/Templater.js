@@ -1,16 +1,16 @@
 'use strict';
 
-import { EmailTemplate as Template } from 'email-templates';
-import { Language } from './Language.js';
-import country_language_map from './config/country_language_map.js';
-import winston from 'winston';
 import _ from 'lodash';
+import winston from 'winston';
+import { EmailTemplate as Template } from 'email-templates';
 
+import { Language } from './Language';
+import country_language_map from './config/country_language_map';
 
 
 export default class Templater {
 
-    constructor (config) {
+    constructor(config) {
 
         this.config = config;
 
@@ -26,9 +26,9 @@ export default class Templater {
     }
 
 
-    _mapper () {
+    _mapper() {
         return {
-            trans (lang, key, variables) {
+            trans(lang, key, variables) {
 
                 if (typeof variables === 'undefined') {
 
@@ -67,7 +67,7 @@ export default class Templater {
     }
 
 
-    _trans (param) {
+    _trans(param) {
 
         return typeof param === 'object'
             ? this._mapper.trans(this._language, param.trans, param.data)
@@ -75,7 +75,7 @@ export default class Templater {
     }
 
 
-    language (lang) {
+    language(lang) {
         this._language = lang || this._language;
         return this;
     }
@@ -89,13 +89,17 @@ export default class Templater {
      *      // where one of these countries can be null
      *      templater.derive_language(user_country, channel_country, signup_country)
      */
-    derive_language (...keys) {
+    derive_language(...keys) {
 
-        const find = key =>
-            language_group =>
-                _.includes(language_group.countries, key)
-                || language_group.countries[_.toUpper(key)];
+        const find = key => {
 
+            const country_code = _.upperCase(key);
+            const country_name = _.startCase(_.lowerCase(key));
+
+            return language_group =>
+                _.includes(language_group.countries, country_name)
+                || language_group.countries[country_code];
+        };
         // used a native for loop to make the loop end
         // as soon as a match is found
         for (let i = 0; i < keys.length; i += 1) {
@@ -114,17 +118,17 @@ export default class Templater {
     }
 
 
-    template (tpl) {
+    template(tpl) {
         this._template = tpl;
         return this;
     }
 
-    content (_content) {
+    content(_content) {
         this._content = _content;
         return this;
     }
 
-    _render (next) {
+    _render(next) {
 
         this._translate_content();
 
@@ -152,7 +156,7 @@ export default class Templater {
     }
 
 
-    _translate_content () {
+    _translate_content() {
 
         // process content
         if (this._content) {
@@ -163,7 +167,7 @@ export default class Templater {
     }
 
 
-    build (next) {
+    build(next) {
 
         if (!this._template) {
             next('Email does not have a template. Call .template() function');
@@ -195,7 +199,7 @@ export default class Templater {
         return this;
     }
 
-    recommend_language (identifier) {
+    recommend_language(identifier) {
 
         if (!_.has(this.config, 'database.ytfreedom')) {
             throw new Error('Missing ytfreedom database configuration');
@@ -222,4 +226,4 @@ export default class Templater {
 
         return this;
     }
-}
+};
