@@ -19,3 +19,7 @@ trash
 sblm.sublime-workspace
 
 /index.js
+
+package-lock.json
+
+.idea
