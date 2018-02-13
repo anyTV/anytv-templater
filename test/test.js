@@ -5,14 +5,14 @@ const should = require('chai').should();
 const path = require('path');
 
 
-describe('Overall test', () => {
+describe('Overall test', function () {
 
     templater.configure({
         templates_dir: path.normalize(__dirname + '/templates/')
     });
 
 
-    it('should generate the right template', done => {
+    it('should generate the right template', function (done) {
 
         templater.make
             .template('sample')
@@ -32,7 +32,7 @@ describe('Overall test', () => {
     });
 
 
-    it('should generate with a custom template', done => {
+    it('should generate with a custom template', function (done) {
 
         templater.make
             .template(path.normalize(__dirname + '/custom_templates/custom'))
@@ -52,7 +52,7 @@ describe('Overall test', () => {
     });
 
 
-    it('should generate the right template even if language is not present', done => {
+    it('should generate the right template even if language is not present', function (done) {
 
         templater.make
             .language('zh')
@@ -70,6 +70,50 @@ describe('Overall test', () => {
                 html.should.be.equal('Feb 17, This is a sample email. hello');
                 done();
             });
+    });
+
+
+    it('should not crash even if some fields are null', function (done) {
+
+        templater.make
+            .template('sample')
+            .content({
+                date: null,
+                hello: {
+                    trans: 'hello',
+                    data: {
+                        name: 'raven'
+                    }
+                }
+            })
+            .build(function (err, html) {
+                html.should.be.equal(', This is a sample email. hello');
+                done();
+            });
+    });
+
+
+    it('should throw an error if provided trans is an array', function (done) {
+
+        function misuse () {
+            templater.make
+                .template('sample')
+                .content({
+                    date: null,
+                    hello: {
+                        trans: [],
+                        data: {
+                            name: 'raven'
+                        }
+                    }
+                })
+                .build(function () {
+                    done('did not throw an error');
+                });
+        }
+
+        misuse.should.throw();
+        done();
     });
 
 });
