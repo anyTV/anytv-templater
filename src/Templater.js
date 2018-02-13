@@ -33,7 +33,7 @@ export default class Templater {
                 if (_.isUndefined(variables)) {
 
                     // support for trans(key, variable)
-                    if (_.isObjectLike(key)) {
+                    if (_.isPlainObject(key)) {
                         variables = key;
                         key = lang;
                     }
@@ -69,7 +69,7 @@ export default class Templater {
 
     _trans(param) {
 
-        return _.isObjectLike(param)
+        return _.isPlainObject(param)
             ? this._mapper.trans(this._language, param.trans, param.data)
             : param;
     }
