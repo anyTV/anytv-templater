@@ -76,20 +76,44 @@ describe('Overall test', function () {
     it('should not crash even if some fields are null', function (done) {
 
         templater.make
-        .template('sample')
-        .content({
-            date: null,
-            hello: {
-                trans: 'hello',
-                data: {
-                    name: 'raven'
+            .template('sample')
+            .content({
+                date: null,
+                hello: {
+                    trans: 'hello',
+                    data: {
+                        name: 'raven'
+                    }
                 }
-            }
-        })
-        .build(function (err, html) {
-            html.should.be.equal(', This is a sample email. hello');
-            done();
-        });
+            })
+            .build(function (err, html) {
+                html.should.be.equal(', This is a sample email. hello');
+                done();
+            });
+    });
+
+
+    it('should throw an error if provided trans is an array', function (done) {
+
+        function misuse () {
+            templater.make
+                .template('sample')
+                .content({
+                    date: null,
+                    hello: {
+                        trans: [],
+                        data: {
+                            name: 'raven'
+                        }
+                    }
+                })
+                .build(function () {
+                    done('did not throw an error');
+                });
+        }
+
+        misuse.should.throw();
+        done();
     });
 
 });
