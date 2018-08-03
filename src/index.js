@@ -25,7 +25,7 @@ export default class {
 
         // make it end in trailing slash
         if (config.templates_dir.substr(-1) !== path.sep) {
-            config.templates_dir += path.sep;
+            config.templates_dir +=  path.sep;
         }
 
         CONFIG = config;
