@@ -1,7 +1,7 @@
 'use strict';
 
 import Templater from './Templater';
-
+const path = require('path')
 
 let CONFIG;
 
@@ -24,8 +24,8 @@ export default class {
         }
 
         // make it end in trailing slash
-        if (config.templates_dir.substr(-1) !== '/') {
-            config.templates_dir += '/';
+        if (config.templates_dir.substr(-1) !== path.sep) {
+            config.templates_dir +=  path.sep;
         }
 
         CONFIG = config;
