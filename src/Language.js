@@ -1,4 +1,4 @@
-'use strict';
+
 
 import languages from './config/country_language_map.js';
 import mysql from 'anytv-node-mysql';

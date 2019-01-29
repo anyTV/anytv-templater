@@ -1,9 +1,9 @@
-'use strict';
+
 
 const templater = require('../index.js');
-const should = require('chai').should();
 const path = require('path');
 
+require('chai').should();
 
 describe('Overall test', function () {
 
