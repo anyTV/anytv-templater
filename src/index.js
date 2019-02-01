@@ -1,7 +1,7 @@
-'use strict';
+
 
 import Templater from './Templater';
-const path = require('path')
+const path = require('path');
 
 let CONFIG;
 

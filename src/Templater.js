@@ -1,4 +1,4 @@
-'use strict';
+
 
 import _ from 'lodash';
 import winston from 'winston';
@@ -77,6 +77,7 @@ export default class Templater {
 
     language(lang) {
         this._language = lang || this._language;
+
         return this;
     }
 
@@ -120,11 +121,13 @@ export default class Templater {
 
     template(tpl) {
         this._template = tpl;
+
         return this;
     }
 
     content(_content) {
         this._content = _content;
+
         return this;
     }
 
@@ -171,11 +174,13 @@ export default class Templater {
 
         if (!this._template) {
             next('Email does not have a template. Call .template() function');
+
             return this;
         }
 
         if (this._built) {
             next(null, this._html);
+
             return this;
         }
 
@@ -226,4 +231,4 @@ export default class Templater {
 
         return this;
     }
-};
+}
